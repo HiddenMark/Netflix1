@@ -11,4 +11,8 @@ public interface TvShowService {
 
 	TvShowRest getTvShowById(Long id) throws NetflixException;
 
+	void deleteTvShowById(Long id) throws NetflixException;
+
+	TvShowRest modifyTvShowById(Long id, String name) throws NetflixException;
+
 }

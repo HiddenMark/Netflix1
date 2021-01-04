@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import com.everis.d4i.tutorial.entities.TvShow;
+import com.everis.d4i.tutorial.json.ActorRest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,26 @@ public class TvShowServiceImpl implements TvShowService {
 		}
 
 	}
+
+	@Override
+	public void deleteTvShowById(Long id) throws NetflixException {
+		try {
+			tvShowRepository.deleteById(id);
+		} catch (EntityNotFoundException entityNotFoundException) {
+			throw new NotFoundException(entityNotFoundException.getMessage());
+		}
+	}
+
+	@Override
+	public TvShowRest modifyTvShowById(Long id, String name) throws NetflixException {
+		try{
+			TvShow tvShow = tvShowRepository.getOne(id);
+			tvShow.setName(name);
+			return modelMapper.map(tvShowRepository.save(tvShow), TvShowRest.class);
+		} catch (EntityNotFoundException entityNotFoundException) {
+			throw new NotFoundException(entityNotFoundException.getMessage());
+		}
+	}
+
 
 }

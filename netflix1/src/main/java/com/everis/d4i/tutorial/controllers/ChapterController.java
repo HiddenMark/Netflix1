@@ -14,4 +14,6 @@ public interface ChapterController {
 	NetflixResponse<ChapterRest> getChapterByTvShowIdAndSeasonNumberAndChapterNumber(Long tvShowId, short seasonNumber,
 			short chapterNumber) throws NetflixException;
 
+	NetflixResponse<ChapterRest> modifyChapterBySeasonTvShowIdAndSeasonNumberAndChapterNumber(Long tvShowId, short seasonNumber,
+			short chapterNumber, String name, short duration) throws NetflixException;
 }
