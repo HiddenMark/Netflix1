@@ -29,7 +29,7 @@ public class SeasonControllerImpl implements SeasonController {
 	@Override
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public NetflixResponse<List<SeasonRest>> getSeasonsByTvShow(Long tvShowId) throws NetflixException {
+	public NetflixResponse<List<SeasonRest>> getSeasonsByTvShow(@PathVariable Long tvShowId) throws NetflixException {
 		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
 				seasonService.getSeasonsByTvShow(tvShowId));
 	}

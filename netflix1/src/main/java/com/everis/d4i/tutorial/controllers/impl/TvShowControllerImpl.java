@@ -42,14 +42,16 @@ public class TvShowControllerImpl implements TvShowController {
 	@Override
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping(value = RestConstants.RESOURCE_ID)
-	public void deleteTvShowById(@PathVariable Long id) throws NetflixException{
+	public NetflixResponse<TvShowRest> deleteTvShowById(@PathVariable Long id) throws NetflixException{
 		tvShowService.deleteTvShowById(id);
+		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
+				null);
 	}
 
 	@Override
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping(value = RestConstants.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-	public NetflixResponse<TvShowRest> modifyTvShowById(Long id, String name) throws NetflixException {
+	public NetflixResponse<TvShowRest> modifyTvShowById(@PathVariable Long id,@RequestParam String name) throws NetflixException {
 		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
 				tvShowService.modifyTvShowById(id, name));
 	}

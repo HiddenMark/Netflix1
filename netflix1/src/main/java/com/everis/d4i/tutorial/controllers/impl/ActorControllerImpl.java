@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR)
@@ -33,7 +32,7 @@ public class ActorControllerImpl implements ActorController {
     }
 
     @Override
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public NetflixResponse<ActorRest> createActor(@ApiParam(value = RestConstants.PARAMETER_ACTOR, required = true) @RequestBody @Valid final ActorRest ActorRest)
             throws NetflixException {
@@ -53,15 +52,17 @@ public class ActorControllerImpl implements ActorController {
     @Override
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = RestConstants.RESOURCE_ID)
-    public void deleteActorById(Long id)
+    public NetflixResponse<ActorRest> deleteActorById(@PathVariable Long id)
             throws NetflixException {
         ActorService.deleteActorById(id);
+        return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
+                null);
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = RestConstants.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public NetflixResponse<ActorRest> modifyActorById(Long id, String name, String lastName, int age) throws NetflixException {
+    public NetflixResponse<ActorRest> modifyActorById(@PathVariable Long id, @RequestParam String name, @RequestParam String lastName, @RequestParam int age) throws NetflixException {
         return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
                 ActorService.modifyActorById(id, name, lastName, age));
     }

@@ -45,7 +45,7 @@ public class ChapterControllerImpl implements ChapterController {
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping(value = RestConstants.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
 	public NetflixResponse<ChapterRest> modifyChapterBySeasonTvShowIdAndSeasonNumberAndChapterNumber(@PathVariable Long tvShowId,
-			@PathVariable short seasonNumber, @PathVariable short chapterNumber, @PathVariable String name, @PathVariable short duration) throws NetflixException {
+			@PathVariable short seasonNumber,@RequestParam short chapterNumber,@RequestParam String name,@RequestParam short duration) throws NetflixException {
 		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
 				chapterService.modifyChapterBySeasonTvShowIdAndSeasonNumberAndChapterNumber(tvShowId, seasonNumber, chapterNumber, name, duration));
 	}
