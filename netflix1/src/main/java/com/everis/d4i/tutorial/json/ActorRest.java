@@ -13,6 +13,17 @@ public class ActorRest implements Serializable {
     private String lastName;
     private int age;
 
+    public ActorRest(){
+
+    }
+
+    public ActorRest(Long id, String name, String lastName, int age) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
     public Long getId() {
         return id;
     }

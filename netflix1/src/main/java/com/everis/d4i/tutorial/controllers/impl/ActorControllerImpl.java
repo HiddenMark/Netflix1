@@ -62,7 +62,7 @@ public class ActorControllerImpl implements ActorController {
     @Override
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = RestConstants.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public NetflixResponse<ActorRest> modifyActorById(@PathVariable Long id, @RequestParam String name, @RequestParam String lastName, @RequestParam int age) throws NetflixException {
+    public NetflixResponse<ActorRest> modifyActorById(@PathVariable Long id, @RequestParam String name,     @RequestParam String lastName, @RequestParam int age) throws NetflixException {
         return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
                 ActorService.modifyActorById(id, name, lastName, age));
     }
