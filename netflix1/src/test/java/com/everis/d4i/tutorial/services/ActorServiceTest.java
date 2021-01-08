@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ActorServiceTest {
@@ -47,7 +48,7 @@ public class ActorServiceTest {
 
     @Test
     public void getActorByIdTest() throws Exception {
-        when(actorRepository.getOne(1l)).thenReturn(
+        when(actorRepository.getOne(anyLong())).thenReturn(
                 new Actor(1l, "Marcos", "Gomez", 21)
         );
 
@@ -58,10 +59,30 @@ public class ActorServiceTest {
 
     @Test
     public void createActorTest() throws Exception{
-        when(actorRepository.save(new Actor(20l, "TESTUSER", "TEST",22)))
+        when(actorRepository.save(any(Actor.class)))
                 .thenReturn(new Actor(1l,"Marcos", "Gomez", 21));
 
-        ActorRest actorRest = actorService.getActorById(1l);
+        ActorRest actorRest = actorService.createActor(new ActorRest(1l, "Marcos", "Gomez", 21));
+
+        assertEquals("Marcos", actorRest.getName());
+    }
+
+    @Test
+    public void deleteActorByIdTest() throws Exception{
+        doNothing().when(actorRepository).deleteById(anyLong());
+        actorService.deleteActorById(anyLong());
+        verify(actorRepository, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void modifyActorByIdTest() throws Exception{
+        when(actorRepository.getOne(anyLong())).
+                thenReturn(new Actor(20l, "Marcos", "Gomez", 21));
+
+        when(actorRepository.save(any(Actor.class)))
+                .thenReturn(new Actor(20l, "Marcos", "Gomez", 21));
+
+        ActorRest actorRest = actorService.modifyActorById(1l, "-", "-", 25);
 
         assertEquals("Marcos", actorRest.getName());
     }
